@@ -37,4 +37,4 @@ function clearSettings() {
     localStorage.removeItem('fontSize');
     localStorage.removeItem('theme');
     location.reload();
-                               }
+}
