@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Launcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .settings {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+        }
+
+        .dark-theme {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-theme nav {
+            background-color: #444;
+        }
+
+        .dark-theme .settings {
+            background-color: #555;
+            border-color: #666;
+        }
+
+        .menu {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .menu.open + .submenu {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="#">Page 1</a>
+        <a href="#">Page 2</a>
+    </div>
+    <a href="#" onclick="toggleSettings()">Settings</a>
+</nav>
+
+<div class="container">
+    <h1>Welcome to Nova Launcher</h1>
+    <p>This is the homepage. Navigate to other pages using the menu above.</p>
+    <div class="settings" id="settings" style="display: none;">
+        <h2>Customize Your Experience</h2>
+        <label for="theme">Theme:</label>
+        <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+        </select>
+        <br><br>
+        <label for="font-size-slider">Font Size:</label>
+        <input type="range" id="font-size-slider" min="12" max="24" value="16">
+        <br><br>
+        <button onclick="clearSettings()">Clear Settings</button>
+    </div>
+</div>
+
+<div class="menu">Home</div>
+<div class="submenu">
+    <div>Download
+        <div class="submenu">
+            <div>Stable</div>
+            <div>Beta</div>
+        </div>
+    </div>
+    <div>Support
+        <div class="submenu">
+            <div>FAQ</div>
+            <div>Contact us</div>
+        </div>
+    </div>
+    <div>Recommended apps
+        <div class="submenu">
+            <div>App 1</div>
+            <div>App 2</div>
+            <div>App 3</div>
+            <div>App 4</div>
+        </div>
+    </div>
+</div>
+
+<div class="menu">Privacy policy</div>
+<div class="submenu">
+    <!-- Add your content here -->
+</div>
+
+<div class="menu">Social Media</div>
+<div class="submenu">
+    <div>Twitter</div>
+    <div>Discord</div>
+    <div>Instagram</div>
+    <div>YouTube</div>
+</div>
+
+<script>
+    function toggleSettings() {
+        const settingsDiv = document.getElementById('settings');
+        settingsDiv.style.display = settingsDiv.style.display === 'none' ? 'block' : 'none';
+    }
+
+    const slider = document.getElementById('font-size-slider');
+    slider.addEventListener('input', (event) => {
+        document.body.style.fontSize = `${event.target.value}px`;
+        localStorage.setItem('fontSize', event.target.value);
+    });
+
+    const themeSelector = document.getElementById('theme');
+    themeSelector.addEventListener('change', (event) => {
+        document.body.className = event.target.value;
+        localStorage.setItem('theme', event.target.value);
+    });
+
+    function loadSettings() {
+        const fontSize = localStorage.getItem('fontSize');
+        if (fontSize) {
+            document.body.style.fontSize = `${fontSize}px`;
+            slider.value = fontSize;
+        }
+
+        const theme = localStorage.getItem('theme');
+        if (theme) {
+            document.body.className = theme;
+            themeSelector.value = theme;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadSettings();
+    });
+
+    function clearSettings() {
+        localStorage.removeItem('fontSize');
+        localStorage.removeItem('theme');
+        location.reload();
+    }
+
+    document.querySelectorAll('.menu').forEach(menu => {
+        menu.addEventListener('click', () => {
+            menu.classList.toggle('open');
+        });
+    });
+</script>
+
+</body>
+  </html>
